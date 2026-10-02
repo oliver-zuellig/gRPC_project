@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package telemetry;
+
+service TelemetryService {
+  rpc SendReading (SensorReading)
+  returns (ReadingResponse);
+}
+
+enum SensorState {
+  SENSOR_STATE_UNSPECIFIED = 0;
+  SENSOR_STATE_OK          = 1;
+  SENSOR_STATE_WARNING     = 2;
+  SENSOR_STATE_CRITICAL    = 3;
+}
+
+message SensorReading {
+  string                    deviceId    = 1;
+  double                    temperature = 2;
+  google.protobuf.Timestamp timestamp   = 3;
+  SensorState               state       = 4;
+}
+
+message ReadingResponse {
+  bool success = 1;
+}
