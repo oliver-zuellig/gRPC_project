@@ -2,6 +2,7 @@ import * as grpc from "@grpc/grpc-js";
 import { streamingServiceDefinition } from "../generated/proto/streaming.grpc-server";
 import type { IStreamingService } from "../generated/proto/streaming.grpc-server";
 import { Command } from "../generated/proto/streaming";
+import { HealthImplementation } from "grpc-health-check";
 
 const impl: IStreamingService = {
     streamSensorReadings(call: grpc.ServerDuplexStream<any, any>) {
@@ -21,6 +22,13 @@ const impl: IStreamingService = {
 
 const server = new grpc.Server();
 server.addService(streamingServiceDefinition, impl);
+
+// Health service: '' = whole server, plus our own service by its full name
+const health = new HealthImplementation({
+    "": "SERVING",
+    "streaming.StreamingService": "SERVING",
+});
+health.addToServer(server);
 server.bindAsync(
     "0.0.0.0:50051",
     grpc.ServerCredentials.createInsecure(),
