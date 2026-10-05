@@ -6,6 +6,7 @@
     "scripts": {
         "server": "tsx --watch src/streaming/server.ts",
         "client": "tsx --watch src/streaming/client.ts",
+        "test": "tsx --test src/streaming/*.test.ts",
         "both": "concurrently \"pnpm run server\" \"pnpm run client\"",
         "generateServer": "protoc --ts_out src/generated --ts_opt server_grpc1 --proto_path . proto/streaming.proto",
         "generateClient": "protoc --ts_out src/generated --ts_opt client_grpc1 --proto_path . proto/streaming.proto",
