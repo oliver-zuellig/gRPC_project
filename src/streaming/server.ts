@@ -50,19 +50,3 @@ if (import.meta.main) {
     const port = await listen(server, "0.0.0.0:50051");
     console.log(`Server runs on Port ${port}`);
 }
-
-/* 
-
-const responseHeaders = new grpc.Metadata();
-
-// by default, the server always writes some custom response headers
-if (!call.request.disableSendingExampleResponseHeaders) {
-    responseHeaders.add('server-header', 'server header value');
-    responseHeaders.add('server-header', 'server header value duplicate');
-    responseHeaders.add('server-header-bin', Buffer.from('server header binary value'));
-}
-call.sendMetadata(responseHeaders);
-
-
-*/
-
