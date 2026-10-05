@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package streaming;
+
+service StreamingService {
+    rpc StreamSensorReadings (stream SensorReading) returns (stream ServerCommand);
+}
+
+enum Status {
+  UNKNOWN_STATUS = 0;
+  OK = 1;
+  REBOOTING = 2;
+  ERROR = 3;
+}
+
+message SensorReading {
+    string device_id = 1;
+    double temperature = 2;
+    double humidity = 3;
+    Status status = 4;
+}
+
+enum Command {
+  UNKNOWN = 0;
+  REBOOT = 1;
+  CHANGE_INTERVAL = 2;
+  CALIBRATE = 3;
+}
+
+message ServerCommand {
+    Command command = 1;
+    double interval = 2;
+    double calibration_value = 3;
+}

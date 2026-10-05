@@ -4,7 +4,12 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "server": "tsx --watch src/streaming/server.ts",
+        "client": "tsx --watch src/streaming/client.ts",
+        "both": "concurrently \"pnpm run server\" \"pnpm run client\"",
+        "generateServer": "protoc --ts_out src/generated --ts_opt server_grpc1 --proto_path . proto/streaming.proto",
+        "generateClient": "protoc --ts_out src/generated --ts_opt client_grpc1 --proto_path . proto/streaming.proto",
+        "generate": "pnpm run generateServer && pnpm run generateClient"
     },
     "keywords": [],
     "author": "",
@@ -20,15 +25,21 @@
     "type": "module",
     "devDependencies": {
         "@bufbuild/buf": "^1.73.0",
+        "@protobuf-ts/plugin": "^2.11.1",
+        "@protobuf-ts/protoc": "^2.11.1",
         "@types/node": "^26.6.3",
         "ts-node": "^10.9.2",
         "tsx": "^4.23.15",
         "typescript": "^7.0.2"
     },
     "dependencies": {
+        "concurrently": "^8.2.0",
         "@grpc/grpc-js": "^1.14.5",
         "@grpc/proto-loader": "^0.8.1",
         "@grpc/reflection": "^1.0.4",
+        "@protobuf-ts/grpc-transport": "^2.11.1",
+        "@protobuf-ts/runtime": "^2.11.1",
+        "@protobuf-ts/runtime-rpc": "^2.11.1",
         "grpc-health-check": "^2.1.0"
     }
 }
